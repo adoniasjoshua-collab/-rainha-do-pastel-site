@@ -1,33 +1,33 @@
 {
   "regraPastel": { "avulso": 1500, "dupla": 2500 },
   "esteira": [
-    { "id": "bebida", "categoria": "bebidas", "item": "coca-lata", "titulo": "Bebida gelada?" },
-    { "id": "lanche", "categoria": "lanches", "item": "pao-de-queijo", "titulo": "Para acompanhar:" },
-    { "id": "doce", "categoria": "doces", "item": "barrinha-cacau-show", "titulo": "Um docinho?" },
-    { "id": "caixa", "categoria": "caixa", "item": "caixinha-personalizada", "titulo": "Para fechar, com nome ou mensagem:" }
+    { "id": "bebida", "item": "coca-lata", "titulo": "Bebida gelada?", "ocultarSeTiver": ["refrigerantes", "sucos"] },
+    { "id": "lanche", "item": "pao-de-queijo", "titulo": "Para acompanhar:", "ocultarSeTiver": ["pao-de-queijo"] },
+    { "id": "doce", "item": "barrinha-cacau-show", "titulo": "Um docinho?", "ocultarSeTiver": ["barrinha-cacau-show", "ferrero-4", "ferrero-8", "ferrero-12"] },
+    { "id": "caixa", "item": "caixinha-personalizada", "titulo": "Para fechar, com nome ou mensagem:", "ocultarSeTiver": ["caixinha-personalizada"] }
   ],
   "categorias": [
     { "id": "pasteis", "nome": "Pastéis" },
     { "id": "lanches", "nome": "Lanches" },
-    { "id": "bebidas", "nome": "Bebidas" },
+    { "id": "refrigerantes", "nome": "Refri" },
+    { "id": "sucos", "nome": "Sucos" },
     { "id": "espumantes", "nome": "Espumantes sem álcool" },
-    { "id": "doces", "nome": "Doces" },
-    { "id": "caixa", "nome": "Caixa personalizada" }
+    { "id": "adicionais", "nome": "Adicionais" }
   ],
   "itens": [
     { "id": "carne-queijo", "categoria": "pasteis", "nome": "Carne com queijo", "detalhe": "Pastelão", "preco": 1500, "regraPar": true, "disponivel": true, "imagem": "carne-queijo", "alergenicos": null },
     { "id": "frango-queijo", "categoria": "pasteis", "nome": "Frango com queijo", "detalhe": "Pastelão", "preco": 1500, "regraPar": true, "disponivel": true, "imagem": "frango-queijo", "alergenicos": null },
     { "id": "presunto-queijo", "categoria": "pasteis", "nome": "Presunto com queijo", "detalhe": "Pastelão", "preco": 1500, "regraPar": true, "disponivel": true, "imagem": "presunto-queijo", "alergenicos": null },
-    { "id": "pao-de-queijo", "categoria": "lanches", "nome": "Pão de queijo", "detalhe": "Unidade", "preco": 200, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "coca-lata", "categoria": "bebidas", "nome": "Coca lata gelada", "detalhe": "Lata", "preco": 600, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "suco-caju", "categoria": "bebidas", "nome": "Suco natural de caju", "detalhe": "Copo 250 ml", "preco": 800, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "suco-uva", "categoria": "bebidas", "nome": "Suco natural de uva", "detalhe": "Copo 250 ml", "preco": 1000, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "suco-acerola", "categoria": "bebidas", "nome": "Suco natural de acerola", "detalhe": "Copo 250 ml", "preco": 1000, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "suco-abacaxi-menta", "categoria": "bebidas", "nome": "Suco natural de abacaxi com menta", "detalhe": "Copo 250 ml", "preco": 1200, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "barrinha-cacau-show", "categoria": "doces", "nome": "Barrinha Cacau Show", "detalhe": "Unidade", "preco": 1000, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "ferrero-4", "categoria": "doces", "nome": "Ferrero Rocher", "detalhe": "Caixa com 4", "preco": 4000, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "ferrero-8", "categoria": "doces", "nome": "Ferrero Rocher", "detalhe": "Caixa com 8", "preco": 5500, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "ferrero-12", "categoria": "doces", "nome": "Ferrero Rocher", "detalhe": "Caixa com 12", "preco": 6900, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "caixinha-personalizada", "categoria": "caixa", "nome": "Caixinha personalizada", "detalhe": "Com nome ou mensagem", "preco": 1000, "personalizavel": true, "disponivel": true, "imagem": null, "alergenicos": null }
+    { "id": "pao-de-queijo", "categoria": "adicionais", "nome": "Pão de queijo", "detalhe": "Unidade", "preco": 200, "disponivel": true, "imagem": null, "rotuloFicha": "Pão de queijo", "alergenicos": null },
+    { "id": "coca-lata", "categoria": "refrigerantes", "nome": "Coca lata gelada", "detalhe": "Lata", "preco": 600, "disponivel": true, "imagem": "coca-lata", "alergenicos": null },
+    { "id": "suco-caju", "categoria": "sucos", "nome": "Suco natural de caju", "detalhe": "Copo 250 ml", "preco": 800, "disponivel": true, "imagem": null, "rotuloFicha": "Caju", "alergenicos": null },
+    { "id": "suco-uva", "categoria": "sucos", "nome": "Suco natural de uva", "detalhe": "Copo 250 ml", "preco": 1000, "disponivel": true, "imagem": null, "rotuloFicha": "Uva", "alergenicos": null },
+    { "id": "suco-acerola", "categoria": "sucos", "nome": "Suco natural de acerola", "detalhe": "Copo 250 ml", "preco": 1000, "disponivel": true, "imagem": null, "rotuloFicha": "Acerola", "alergenicos": null },
+    { "id": "suco-abacaxi-menta", "categoria": "sucos", "nome": "Suco natural de abacaxi com menta", "detalhe": "Copo 250 ml", "preco": 1200, "disponivel": true, "imagem": null, "rotuloFicha": "Abacaxi com menta", "alergenicos": null },
+    { "id": "barrinha-cacau-show", "categoria": "adicionais", "nome": "Barrinha Cacau Show", "detalhe": "Unidade", "preco": 1000, "disponivel": true, "imagem": "barrinha-cacau-show", "alergenicos": null },
+    { "id": "ferrero-4", "categoria": "adicionais", "nome": "Ferrero Rocher", "detalhe": "Caixa com 4", "preco": 4000, "disponivel": true, "imagem": "ferrero-4", "alergenicos": null },
+    { "id": "ferrero-8", "categoria": "adicionais", "nome": "Ferrero Rocher", "detalhe": "Caixa com 8", "preco": 5500, "disponivel": true, "imagem": "ferrero-8", "alergenicos": null },
+    { "id": "ferrero-12", "categoria": "adicionais", "nome": "Ferrero Rocher", "detalhe": "Caixa com 12", "preco": 6900, "disponivel": true, "imagem": "ferrero-12", "alergenicos": null },
+    { "id": "caixinha-personalizada", "categoria": "adicionais", "nome": "Caixinha personalizada", "detalhe": "Com nome ou mensagem", "preco": 1000, "personalizavel": true, "disponivel": true, "imagem": null, "rotuloFicha": "Caixa", "alergenicos": null }
   ]
 }

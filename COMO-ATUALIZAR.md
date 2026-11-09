@@ -7,6 +7,7 @@ Você não precisa mexer em código. Basta pedir ao Claude, nesta pasta, com uma
 | Trocar um preço | "Muda a Coca lata para R$ 7." |
 | Marcar como esgotado | "Marca o suco de uva como esgotado." |
 | Voltar a vender | "O suco de uva voltou." |
+| Colocar foto em um produto | Mande a foto e diga de qual produto é. |
 | Adicionar item com foto | Mande a foto e diga: "Novo item: X-Burguer, pão, carne e queijo, R$ 18." |
 | Adicionar espumante sem álcool | Mande a foto do rótulo (frente e verso) e o preço. |
 | Mudar a taxa de entrega | "A entrega agora é R$ 8." |

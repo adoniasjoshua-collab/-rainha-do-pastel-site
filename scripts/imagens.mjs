@@ -18,11 +18,14 @@ export async function gerarFotos(raiz, fotos, destino) {
     const base = () => foto.recorte ? sharp(bytes).extract(foto.recorte) : sharp(bytes);
     const meta = foto.recorte ? foto.recorte : await sharp(bytes).metadata();
     const proporcao = meta.height / meta.width;
-    const item = { alt: foto.alt, largura: 960, altura: Math.round(960 * proporcao), avif: [], webp: [] };
-    for (const w of LARGURAS) {
+    const larguras = foto.miniatura ? [168, 336] : LARGURAS;
+    const maior = larguras[1];
+    const item = { alt: foto.alt, largura: maior, altura: foto.miniatura ? maior : Math.round(maior * proporcao), avif: [], webp: [] };
+    const medida = w => foto.miniatura ? { width: w, height: w, fit: foto.ajuste || 'cover', background: '#ffffff' } : { width: w };
+    for (const w of larguras) {
       const a = `${nome}-${w}-${hash}.avif`, b = `${nome}-${w}-${hash}.webp`;
-      await base().resize({ width: w }).avif({ quality: 52, effort: 4 }).toFile(path.join(destino, a));
-      await base().resize({ width: w }).webp({ quality: 72 }).toFile(path.join(destino, b));
+      await base().resize(medida(w)).avif({ quality: 52, effort: 4 }).toFile(path.join(destino, a));
+      await base().resize(medida(w)).webp({ quality: 72 }).toFile(path.join(destino, b));
       item.avif.push([a, w]); item.webp.push([b, w]);
     }
     mapa[nome] = item;

@@ -10,7 +10,9 @@ Dados não confirmados pelo dono e tratados assim na v1
 - Prazo de entrega: não é prometido.
 - Preços da seção 3: usados como estão na página atual.
 - Caixinha personalizada: volta como última opção da esteira. Maçã: fora do cardápio. Pão de queijo: mantido em Lanches.
-- Lanches, espumantes sem álcool e chocolates novos: sem dados, a categoria não aparece.
+- Lanches e espumantes sem álcool: sem dados, a categoria não aparece.
+- Barras de chocolate Cacau Show além da barrinha de R$ 10: aguardando nome, tamanho e preço.
+- Fotos que faltam: pão de queijo, 4 sucos e caixinha. O comando `npm run gerar` lista as que faltam.
 - Alérgenos: "Tem alergia? Pergunte antes de pedir".
 - Anúncios: nenhuma tag carregada.
 

@@ -66,8 +66,12 @@ function controle(i) {
 function cartaoFoto(i) {
   return `<article class="card${i.disponivel ? '' : ' off'}" data-item="${i.id}">${picture(i.imagem, '(min-width:720px) 340px, calc(100vw - 32px)')}<div class="card-c"><h3>${esc(i.nome)}<span class="detalhe">${esc(i.detalhe)}</span></h3><span class="preco">${R.curto(i.preco)}</span>${controle(i)}</div></article>`;
 }
+function miniatura(i) {
+  if (i.imagem) return `<div class="mini-foto">${picture(i.imagem, '84px')}</div>`;
+  return `<div class="mini-foto sem-foto" aria-hidden="true">${esc(i.rotuloFicha || i.nome)}</div>`;
+}
 function ficha(i) {
-  return `<article class="ficha${i.disponivel ? '' : ' off'}" data-item="${i.id}"><h3>${esc(i.nome)}<span class="detalhe">${esc(i.detalhe)}</span></h3><span class="preco">${R.curto(i.preco)}</span>${controle(i)}</article>`;
+  return `<article class="ficha${i.disponivel ? '' : ' off'}" data-item="${i.id}">${miniatura(i)}<h3>${esc(i.nome)}<span class="detalhe">${esc(i.detalhe)}</span></h3><span class="preco">${R.curto(i.preco)}</span>${controle(i)}</article>`;
 }
 // Categoria sem item com preço real não aparece.
 const categorias = cardapio.categorias.map(c => ({ ...c, itens: cardapio.itens.filter(i => i.categoria === c.id && (i.preco > 0)) })).filter(c => c.itens.length);
@@ -75,7 +79,7 @@ const categorias = cardapio.categorias.map(c => ({ ...c, itens: cardapio.itens.f
 const linkDireto = R.linkWhatsApp(negocio.whatsapp, 'Olá! Quero fazer um pedido.');
 
 function secaoMenu(c) {
-  const comFoto = c.itens.filter(i => i.imagem), semFoto = c.itens.filter(i => !i.imagem);
+  const comFoto = c.id === 'pasteis' ? c.itens : [], semFoto = c.id === 'pasteis' ? [] : c.itens;
   const nota = c.id === 'pasteis' ? `<p class="nota">1 pastelão <strong>${R.curto(avulso)}</strong>. Cada 2, de qualquer recheio, <strong>${R.curto(dupla)}</strong>. O desconto entra sozinho. Fotos ilustrativas, bebida vendida à parte.</p>` : '';
   return `<section class="secao" id="${c.id}" aria-labelledby="t-${c.id}"><h2 id="t-${c.id}">${esc(c.nome)}</h2>${nota}${comFoto.length ? `<div class="fotos">${comFoto.map(cartaoFoto).join('')}</div>` : ''}${semFoto.length ? `<div class="lista">${semFoto.map(ficha).join('')}</div>` : ''}</section>`;
 }
@@ -223,5 +227,7 @@ const pend = [];
 if (!negocio.horarios) pend.push('horário da cozinha (site não mostra aberto/fechado)');
 if (!negocio.legal) pend.push('razão social e CNPJ no rodapé (obrigatório antes de publicar)');
 if (!negocio.instagram) pend.push('Instagram');
+const semFoto = cardapio.itens.filter(i => i.disponivel && !i.imagem).map(i => i.nome);
+if (semFoto.length) pend.push('fotos que faltam: ' + semFoto.join(', '));
 console.log(`Site gerado em dist/ · ${cardapio.itens.length} itens · ${categorias.length} categorias`);
 if (pend.length) console.log('Pendências do dono:\n- ' + pend.join('\n- '));
