@@ -1,5 +1,5 @@
 {
- "data": "2026-11-09T21:10:48.844Z",
+ "data": "2026-11-09T21:15:04.128Z",
  "passaram": [
   "Sem rolagem horizontal 360",
   "Imagens carregadas 360",
@@ -16,7 +16,7 @@
   "Barra escondida com carrinho vazio",
   "Aviso do 2º pastel",
   "Sugestão de bebida após o 1º pastel",
-  "Dupla R$ 25 + entrega R$ 7 na barra",
+  "Dupla com entrega na barra",
   "Coca na barra",
   "Comanda abre e barra some",
   "Entrega sem endereço não envia",
@@ -54,7 +54,7 @@
  ],
  "falharam": [],
  "toques": 6,
- "duracaoScriptMs": 551,
+ "duracaoScriptMs": 548,
  "velocidade": {
   "lcp": 1820,
   "cls": 0,
@@ -63,13 +63,13 @@
  },
  "medidas": [
   {
-   "lcp": 1812,
+   "lcp": 1828,
    "cls": 0,
    "peso": 325,
    "reqs": 8
   },
   {
-   "lcp": 1836,
+   "lcp": 1816,
    "cls": 0,
    "peso": 325,
    "reqs": 8

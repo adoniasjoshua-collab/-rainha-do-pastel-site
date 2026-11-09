@@ -10,7 +10,10 @@ const raiz = fileURLToPath(new URL('../', import.meta.url));
 const dist = path.join(raiz, 'dist');
 const negocio = JSON.parse(fs.readFileSync(path.join(raiz, 'data/negocio.json'), 'utf8'));
 const cardapio = JSON.parse(fs.readFileSync(path.join(raiz, 'data/cardapio.json'), 'utf8'));
-const dados = { negocio, regraPastel: cardapio.regraPastel, itens: cardapio.itens.map(i => ({ ...i, regraPar: !!i.regraPar })) };
+// Valores fixos para testar a lógica; mudar preço no cardápio não deve quebrar estes testes.
+const REGRA_TESTE = { avulso: 1500, dupla: 2500 };
+const dados = { negocio: { ...negocio, entrega: { ...negocio.entrega, taxa: 700 } }, regraPastel: REGRA_TESTE,
+  itens: cardapio.itens.map(i => ({ ...i, regraPar: !!i.regraPar, preco: i.regraPar ? 1500 : i.id === 'coca-lata' ? 600 : i.id === 'caixinha-personalizada' ? 1000 : i.preco })) };
 const producao = process.argv.includes('--producao');
 let ok = 0; const falhas = [];
 const checar = (cond, nome) => { if (cond) ok++; else falhas.push(nome); };
@@ -23,7 +26,7 @@ for (const [n, v] of Object.entries(TABELA)) {
   const c = {}; for (let i = 0; i < Number(n); i++) { const r = RECHEIOS[i % 3]; c[r] = (c[r] || 0) + 1; }
   igual(R.calcular(c, dados, 'retirada').produtos, v, `Tabela ${n} pastéis`);
 }
-const ctx = (extra = {}) => ({ codigo: 'Z4K7', origem: '', regra: cardapio.regraPastel, rotuloEntrega: negocio.entrega.rotulo, ...extra });
+const ctx = (extra = {}) => ({ codigo: 'Z4K7', origem: '', regra: REGRA_TESTE, rotuloEntrega: negocio.entrega.rotulo, ...extra });
 const cli = (e = {}) => ({ nome: 'Ana', endereco: 'Rua A, 10', pagamento: 'Dinheiro', ehDinheiro: true, troco: '100', quando: 'agora', dia: 'hoje', hora: '', obs: '', ...e });
 const exemplo = { 'carne-queijo': 2, 'frango-queijo': 1, 'coca-lata': 1 };
 

@@ -87,7 +87,7 @@ const areaTexto = negocio.entrega.area;
 const pagamentos = negocio.pagamentos.map(p => p.nome.replace('Cartão de crédito pelo link InfinityPay', 'cartão de crédito pelo link InfinityPay')).join(', ').replace(/, ([^,]*)$/, ' ou $1');
 const faq = [
   ['Quanto custa o pastelão?', `1 pastelão sai por ${R.curto(avulso)}. Cada 2, com qualquer recheio, saem por ${R.curto(dupla)}. Três ficam ${R.curto(R.precoPasteis(3, cardapio.regraPastel))} e quatro, ${R.curto(R.precoPasteis(4, cardapio.regraPastel))}.`],
-  ['Vem bebida junto?', 'Não. Coca lata e sucos naturais são vendidos à parte e entram no mesmo pedido.'],
+  ['Vem bebida junto?', 'Não. Refrigerantes e sucos são vendidos à parte e entram no mesmo pedido.'],
   ['Quanto é a entrega em Canaã dos Carajás?', `${R.curto(taxa)} por pedido, cobrados uma única vez, em ${areaTexto}.`],
   ['Posso retirar?', `Sim, ${negocio.retirada.charAt(0).toLowerCase() + negocio.retirada.slice(1)}`],
   ['Como posso pagar?', `${pagamentos.charAt(0).toUpperCase() + pagamentos.slice(1)}. Se for dinheiro, é só avisar o troco.`]

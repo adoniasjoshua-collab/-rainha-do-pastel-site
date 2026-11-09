@@ -5,8 +5,15 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { servir } from './previa.mjs';
+import '../src/js/regras.js';
 
 const raiz = fileURLToPath(new URL('../', import.meta.url));
+const R = globalThis.Regras;
+const cardapio = JSON.parse(fs.readFileSync(path.join(raiz, 'data/cardapio.json'), 'utf8'));
+const negocio = JSON.parse(fs.readFileSync(path.join(raiz, 'data/negocio.json'), 'utf8'));
+const { avulso, dupla } = cardapio.regraPastel, taxa = negocio.entrega.taxa;
+const precoDe = id => cardapio.itens.find(i => i.id === id).preco;
+const coca = precoDe('coca-lata'), caixa = precoDe('caixinha-personalizada');
 const saida = path.join(raiz, 'docs/prints');
 fs.mkdirSync(saida, { recursive: true });
 const PORTA_SITE = 8123, PORTA_CDP = 9333;
@@ -73,13 +80,13 @@ await ev(`window.toques=0;document.addEventListener('click',()=>{window.toques++
 await checar(`document.querySelector('#barra').hidden`, 'Barra escondida com carrinho vazio');
 const inicio = Date.now();
 await ev(`clique('[data-add="carne-queijo"]')`);
-await checar(`document.querySelector('#b-par').textContent.includes('2º sai por R$ 10')`, 'Aviso do 2º pastel');
+await checar(`document.querySelector('#b-par').textContent.includes('2º sai por ${R.curto(dupla - avulso)}')`, 'Aviso do 2º pastel');
 await checar(`!document.querySelector('#sug-bebida').hidden`, 'Sugestão de bebida após o 1º pastel');
 await print('carrinho-barra-390.png');
 await ev(`clique('[data-add="frango-queijo"]')`);
-await checar(`document.querySelector('#b-par').hidden && document.querySelector('#b-total').textContent.includes('32,00')`, 'Dupla R$ 25 + entrega R$ 7 na barra');
+await checar(`document.querySelector('#b-par').hidden && document.querySelector('#b-total').textContent.includes('${R.moeda(dupla + taxa)}')`, 'Dupla com entrega na barra');
 await ev(`clique('#sug-bebida [data-mais="coca-lata"]')`);
-await checar(`document.querySelector('#sug-bebida').hidden && document.querySelector('#b-total').textContent.includes('38,00')`, 'Coca na barra');
+await checar(`document.querySelector('#sug-bebida').hidden && document.querySelector('#b-total').textContent.includes('${R.moeda(dupla + coca + taxa)}')`, 'Coca na barra');
 await ev(`clique('#abrir')`);
 await checar(`document.querySelector('#comanda').open && document.querySelector('#barra').hidden`, 'Comanda abre e barra some');
 await ev(`clique('#enviar')`);
@@ -89,8 +96,8 @@ await ev('window.toques--');
 await ev(`window.campo=(n,v)=>{const e=document.querySelector('[name='+n+']');e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}))};clique('#endereco');campo('endereco','Rua das Flores, 10 & casa #2 perto do mercado');`);
 await print('comanda-390.png');
 await ev(`window.msg=()=>new URL(document.querySelector('#enviar').href).searchParams.get('text')`);
-await checar(`msg().includes('⭐ 1× Carne com queijo')&&msg().includes('⭐ 1× Frango com queijo')&&msg().includes('1 dupla × R$ 25,00 = R$ 25,00')&&msg().includes('➕ 1× Coca lata gelada: R$ 6,00')&&msg().includes('TOTAL: R$ 38,00')&&msg().includes('casa #2')`, 'Mensagem correta');
-await checar(`document.querySelector('#t-totais').textContent.includes('R$ 38,00')&&document.querySelector('#enviar').textContent.includes('R$ 38,00')`, 'Total igual na tela, botão e mensagem');
+await checar(`msg().includes('⭐ 1× Carne com queijo')&&msg().includes('⭐ 1× Frango com queijo')&&msg().includes('1 dupla × ${R.moeda(dupla)} = ${R.moeda(dupla)}')&&msg().includes('➕ 1× Coca lata gelada: ${R.moeda(coca)}')&&msg().includes('TOTAL: ${R.moeda(dupla + coca + taxa)}')&&msg().includes('casa #2')`, 'Mensagem correta');
+await checar(`document.querySelector('#t-totais').textContent.includes('${R.moeda(dupla + coca + taxa)}')&&document.querySelector('#enviar').textContent.includes('${R.moeda(dupla + coca + taxa)}')`, 'Total igual na tela, botão e mensagem');
 await checar(`![...msg()].some(c=>c.codePointAt(0)>65535)`, 'Mensagem sem emoji de 4 bytes no navegador');
 await checar(`/Pedido Z[A-Z2-9]{3}/.test(msg())`, 'Código do pedido na mensagem');
 await ev(`clique('#enviar')`);
@@ -105,7 +112,7 @@ await checar(`!localStorage.getItem('rp_dados_v1')`, 'Dados pessoais só com op�
 
 // Retirada zera taxa
 await ev(`document.querySelector('input[name=tipo][value=retirada]').click()`);
-await checar(`msg().includes('✅ *RETIRADA*')&&msg().includes('TOTAL: R$ 31,00')&&!msg().includes('Endereço')&&document.querySelector('#t-totais').textContent.includes('sem taxa')&&document.querySelector('#campo-endereco').hidden`, 'Retirada zera taxa e tira endereço');
+await checar(`msg().includes('✅ *RETIRADA*')&&msg().includes('TOTAL: ${R.moeda(dupla + coca)}')&&!msg().includes('Endereço')&&document.querySelector('#t-totais').textContent.includes('sem taxa')&&document.querySelector('#campo-endereco').hidden`, 'Retirada zera taxa e tira endereço');
 await ev(`document.querySelector('input[name=tipo][value=entrega]').click();document.querySelector('input[name=pagamento][value=dinheiro]').click();campo('troco','100')`);
 await checar(`msg().includes('Dinheiro (troco para R$ 100)')&&!document.querySelector('#campo-troco').hidden`, 'Troco na mensagem');
 await ev(`document.querySelector('input[name=quando][value=agendar]').click();campo('hora','19:30')`);
@@ -114,13 +121,13 @@ await checar(`(()=>{const d=document.querySelector('#comanda');return d.scrollWi
 
 // Persistência
 await abrir();
-await checar(`document.querySelector('#b-total').textContent.includes('38,00')`, 'Carrinho sobrevive ao recarregar');
+await checar(`document.querySelector('#b-total').textContent.includes('${R.moeda(dupla + coca + taxa)}')`, 'Carrinho sobrevive ao recarregar');
 await ev(`const c=JSON.parse(localStorage.rp_carrinho_v1);c.t=Date.now()-25*36e5;localStorage.rp_carrinho_v1=JSON.stringify(c)`);
 await abrir();
 await checar(`document.querySelector('#barra').hidden`, 'Carrinho expira em 24 horas');
 await checar(`!document.querySelector('#novo').hidden&&document.querySelector('#novo-resumo').textContent.includes('Carne')`, 'Aparece "Pedir de novo"');
 await ev(`document.querySelector('#pedir-de-novo').click()`);
-await checar(`document.querySelector('#comanda').open&&document.querySelector('#t-totais').textContent.includes('38,00')`, '"Pedir de novo" remonta o pedido');
+await checar(`document.querySelector('#comanda').open&&document.querySelector('#t-totais').textContent.includes('${R.moeda(dupla + coca + taxa)}')`, '"Pedir de novo" remonta o pedido');
 await ev(`document.querySelector('#comanda').close()`);
 await pausa(50);
 // Lembrar dados
@@ -145,7 +152,7 @@ await checar(`${slot}.includes('Caixinha personalizada')&&document.querySelector
 await print('esteira-caixa-390.png');
 await ev(`document.querySelector('#sug-esteira [data-mais]').click();const t=document.querySelector('[name=personalizacao]');t.value='Para Ana';t.dispatchEvent(new Event('input',{bubbles:true}))`);
 await ev(`window.msg=()=>new URL(document.querySelector('#enviar').href).searchParams.get('text')`);
-await checar(`document.querySelector('#sug-esteira').hidden&&!document.querySelector('#campo-caixa').hidden&&msg().includes('1× Caixinha personalizada: R$ 10,00')&&msg().includes('Na caixinha: Para Ana')&&msg().includes('TOTAL: R$ 32,00')`, 'Caixa entra no pedido com a mensagem');
+await checar(`document.querySelector('#sug-esteira').hidden&&!document.querySelector('#campo-caixa').hidden&&msg().includes('1× Caixinha personalizada: ${R.moeda(caixa)}')&&msg().includes('Na caixinha: Para Ana')&&msg().includes('TOTAL: ${R.moeda(avulso + caixa + taxa)}')`, 'Caixa entra no pedido com a mensagem');
 await ev(`document.querySelector('#comanda').close()`);
 
 // Sem JavaScript
@@ -153,7 +160,7 @@ await cdp('Emulation.setScriptExecutionDisabled', { value: true });
 await abrir();
 const semJs = async (e) => (await cdp('Runtime.evaluate', { expression: e, returnByValue: true })).result.value;
 const tx = await semJs(`document.body.innerText`);
-(tx.includes('R$ 15') && tx.includes('Coca lata gelada') && tx.includes('Pedir pelo WhatsApp') ? res : falhas).push('Sem JavaScript: cardápio, preços e botão');
+(tx.includes(R.curto(avulso)) && tx.includes('Coca lata gelada') && tx.includes('Pedir pelo WhatsApp') ? res : falhas).push('Sem JavaScript: cardápio, preços e botão');
 await cdp('Emulation.setScriptExecutionDisabled', { value: false });
 
 // 404 e privacidade
