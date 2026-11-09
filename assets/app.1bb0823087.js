@@ -216,14 +216,14 @@
     if (p.nPasteis % 2 !== 1) return '';
     return 'Adicione mais 1 e o ' + (p.nPasteis + 1) + 'º sai por ' + R.curto(D.regraPastel.dupla - D.regraPastel.avulso);
   }
-  function temCategoria(p, cat) { return p.linhas.some(function (l) { return l.item.categoria === cat; }); }
 
   function temCaixa(p) { return p.linhas.some(function (l) { return l.item.personalizavel; }); }
   /* Esteira: mostra uma oferta por vez, na ordem definida em cardapio.json. */
   function proximaEtapa(p) {
     return D.esteira.filter(function (e) {
       var item = porId[e.item];
-      return !dispensou[e.id] && item && item.disponivel && !temCategoria(p, e.categoria) && (e.id !== 'bebida' || p.nPasteis > 0);
+      var jaTem = p.linhas.some(function (l) { return e.ocultarSeTiver.indexOf(l.item.id) > -1 || e.ocultarSeTiver.indexOf(l.item.categoria) > -1; });
+      return !dispensou[e.id] && item && item.disponivel && !jaTem && (e.id !== 'bebida' || p.nPasteis > 0);
     })[0] || null;
   }
   function caixaSugestao(alvo, etapa) {
