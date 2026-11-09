@@ -48,6 +48,8 @@ button{cursor:pointer;touch-action:manipulation}
 .nota{margin:6px 0 14px;color:var(--suave);font-size:.95rem}
 .nota strong{color:var(--texto)}
 .fotos{display:grid;gap:14px}
+.banner-cat{max-width:340px;margin:8px 0 14px}
+.banner-cat img{width:100%;border-radius:12px}
 .card{background:var(--fundo2);border-radius:14px;overflow:hidden}
 .card img{width:100%;aspect-ratio:16/9;object-fit:cover}
 .card-c{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;padding:12px 14px 14px}

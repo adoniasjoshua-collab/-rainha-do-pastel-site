@@ -25,6 +25,7 @@ for (const i of cardapio.itens) {
   if (i.categoria === 'espumantes' && !i.teorRotulo) erros.push(`${i.id}: espumante sem teorRotulo`);
   if (!cardapio.categorias.some(c => c.id === i.categoria)) erros.push(`${i.id}: categoria inexistente`);
 }
+for (const c of cardapio.categorias) if (c.imagem && !fotos[c.imagem]) erros.push(`categoria ${c.id}: imagem "${c.imagem}" não existe`);
 for (const e of cardapio.esteira) if (!cardapio.itens.some(i => i.id === e.item)) erros.push(`esteira: item "${e.item}" não existe`);
 if (erros.length) { console.error('BUILD FALHOU:\n- ' + erros.join('\n- ')); process.exit(1); }
 
@@ -81,7 +82,7 @@ const linkDireto = R.linkWhatsApp(negocio.whatsapp, 'Olá! Quero fazer um pedido
 function secaoMenu(c) {
   const comFoto = c.id === 'pasteis' ? c.itens : [], semFoto = c.id === 'pasteis' ? [] : c.itens;
   const nota = c.id === 'pasteis' ? `<p class="nota">1 pastelão <strong>${R.curto(avulso)}</strong>. Cada 2, de qualquer recheio, <strong>${R.curto(dupla)}</strong>. O desconto entra sozinho. Fotos ilustrativas, bebida vendida à parte.</p>` : '';
-  return `<section class="secao" id="${c.id}" aria-labelledby="t-${c.id}"><h2 id="t-${c.id}">${esc(c.nome)}</h2>${nota}${comFoto.length ? `<div class="fotos">${comFoto.map(cartaoFoto).join('')}</div>` : ''}${semFoto.length ? `<div class="lista">${semFoto.map(ficha).join('')}</div>` : ''}</section>`;
+  return `<section class="secao" id="${c.id}" aria-labelledby="t-${c.id}"><h2 id="t-${c.id}">${esc(c.nome)}</h2>${nota}${c.imagem ? `<div class="banner-cat">${picture(c.imagem, '(min-width:720px) 340px, calc(100vw - 32px)')}</div>` : ''}${comFoto.length ? `<div class="fotos">${comFoto.map(cartaoFoto).join('')}</div>` : ''}${semFoto.length ? `<div class="lista">${semFoto.map(ficha).join('')}</div>` : ''}</section>`;
 }
 const areaTexto = negocio.entrega.area;
 const pagamentos = negocio.pagamentos.map(p => p.nome.replace('Cartão de crédito pelo link InfinityPay', 'cartão de crédito pelo link InfinityPay')).join(', ').replace(/, ([^,]*)$/, ' ou $1');

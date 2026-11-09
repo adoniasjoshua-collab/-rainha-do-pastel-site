@@ -18,7 +18,7 @@ export async function gerarFotos(raiz, fotos, destino) {
     const base = () => foto.recorte ? sharp(bytes).extract(foto.recorte) : sharp(bytes);
     const meta = foto.recorte ? foto.recorte : await sharp(bytes).metadata();
     const proporcao = meta.height / meta.width;
-    const larguras = foto.miniatura ? [168, 336] : LARGURAS;
+    const larguras = foto.larguras || (foto.miniatura ? [168, 336] : LARGURAS);
     const maior = larguras[1];
     const item = { alt: foto.alt, largura: maior, altura: foto.miniatura ? maior : Math.round(maior * proporcao), avif: [], webp: [] };
     const medida = w => foto.miniatura ? { width: w, height: w, fit: foto.ajuste || 'cover', background: '#ffffff' } : { width: w };

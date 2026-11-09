@@ -1,5 +1,5 @@
 {
- "data": "2026-11-09T21:15:04.128Z",
+ "data": "2026-11-09T21:17:54.743Z",
  "passaram": [
   "Sem rolagem horizontal 360",
   "Imagens carregadas 360",
@@ -47,37 +47,37 @@
   "Sem JavaScript: cardápio, preços e botão",
   "404 mostra o cardápio",
   "Privacidade abre",
-  "LCP até 2,0 s (1820 ms)",
+  "LCP até 2,0 s (1812 ms)",
   "CLS até 0,05 (0)",
-  "Carga inicial até 400 KB (325 KB)",
+  "Carga inicial até 400 KB (326 KB)",
   "Sem erro no console"
  ],
  "falharam": [],
  "toques": 6,
- "duracaoScriptMs": 548,
+ "duracaoScriptMs": 579,
  "velocidade": {
-  "lcp": 1820,
+  "lcp": 1812,
   "cls": 0,
-  "pesoKB": 325,
+  "pesoKB": 326,
   "requisicoes": 8
  },
  "medidas": [
   {
-   "lcp": 1828,
+   "lcp": 1812,
    "cls": 0,
-   "peso": 325,
+   "peso": 326,
    "reqs": 8
   },
   {
-   "lcp": 1816,
+   "lcp": 1824,
    "cls": 0,
-   "peso": 325,
+   "peso": 326,
    "reqs": 8
   },
   {
-   "lcp": 1820,
+   "lcp": 1812,
    "cls": 0,
-   "peso": 325,
+   "peso": 326,
    "reqs": 8
   }
  ]

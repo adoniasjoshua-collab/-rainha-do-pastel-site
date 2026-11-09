@@ -71,7 +71,7 @@ for (const w of [360, 390, 768, 1440]) {
   await checar(`[...document.images].every(i=>i.complete&&i.naturalWidth>0)`, `Imagens carregadas ${w}`);
   await checar(`[...document.querySelectorAll('main button,main a.btn,.abas a')].filter(e=>e.offsetParent).every(e=>e.getBoundingClientRect().height>=44)`, `Área de toque 44px ${w}`);
   await print(`inicial-${w}.png`);
-  if (w === 390) { await ev(`document.querySelector('#refrigerantes').scrollIntoView({behavior:'instant'})`); await pausa(200); await print('lista-390.png'); await ev(`document.querySelector('#adicionais').scrollIntoView({behavior:'instant'})`); await pausa(200); await print('adicionais-390.png'); }
+  if (w === 390) { await ev(`document.querySelector('#refrigerantes').scrollIntoView({behavior:'instant'})`); await pausa(200); await print('lista-390.png'); await ev(`document.querySelector('#sucos').scrollIntoView({behavior:'instant'})`); await pausa(200); await ev(`(async()=>{for(const i of document.images){i.loading='eager';await Promise.race([i.decode().catch(()=>{}),new Promise(r=>setTimeout(r,3000))])}})()`); await print('sucos-390.png'); await ev(`document.querySelector('#adicionais').scrollIntoView({behavior:'instant'})`); await pausa(200); await print('adicionais-390.png'); }
 }
 
 // Fluxo: 2 pastéis + Coca, contando toques
