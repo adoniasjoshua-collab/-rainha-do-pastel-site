@@ -3,7 +3,7 @@
   "esteira": [
     { "id": "bebida", "item": "coca-lata", "titulo": "Bebida gelada?", "ocultarSeTiver": ["refrigerantes", "sucos"] },
     { "id": "lanche", "item": "pao-de-queijo", "titulo": "Para acompanhar:", "ocultarSeTiver": ["pao-de-queijo"] },
-    { "id": "doce", "item": "barrinha-cacau-show", "titulo": "Um docinho?", "ocultarSeTiver": ["barrinha-cacau-show", "ferrero-4", "ferrero-8", "ferrero-12"] },
+    { "id": "doce", "item": "barrinha-cacau-show", "titulo": "Um docinho?", "ocultarSeTiver": ["barrinha-cacau-show", "cacau-lacreme-zero-100g", "ferrero-4", "ferrero-8", "ferrero-12", "panettone-chocolate-80g", "kit-cacau-lacreme"] },
     { "id": "caixa", "item": "caixinha-personalizada", "titulo": "Para fechar, com nome ou mensagem:", "ocultarSeTiver": ["caixinha-personalizada"] }
   ],
   "categorias": [
@@ -18,18 +18,20 @@
     { "id": "carne-queijo", "categoria": "pasteis", "nome": "Carne com queijo", "detalhe": "Pastelão", "preco": 1500, "regraPar": true, "disponivel": true, "imagem": "carne-queijo", "alergenicos": null },
     { "id": "frango-queijo", "categoria": "pasteis", "nome": "Frango com queijo", "detalhe": "Pastelão", "preco": 1500, "regraPar": true, "disponivel": true, "imagem": "frango-queijo", "alergenicos": null },
     { "id": "presunto-queijo", "categoria": "pasteis", "nome": "Presunto com queijo", "detalhe": "Pastelão", "preco": 1500, "regraPar": true, "disponivel": true, "imagem": "presunto-queijo", "alergenicos": null },
-    { "id": "pao-de-queijo", "categoria": "adicionais", "nome": "Pão de queijo", "detalhe": "Unidade", "preco": 200, "disponivel": true, "imagem": "pao-de-queijo", "alergenicos": null },
-    { "id": "coca-lata", "categoria": "refrigerantes", "nome": "Coca lata gelada", "detalhe": "Lata", "preco": 600, "disponivel": true, "imagem": "coca-lata", "alergenicos": null },
-    { "id": "guarana-lata", "categoria": "refrigerantes", "nome": "Guaraná Antarctica lata gelada", "detalhe": "Lata", "preco": 600, "disponivel": true, "imagem": "guarana-lata", "alergenicos": null },
-    { "id": "fanta-lata", "categoria": "refrigerantes", "nome": "Fanta lata gelada", "detalhe": "Lata", "preco": 600, "disponivel": true, "imagem": null, "rotuloFicha": "Fanta", "alergenicos": null },
+    { "id": "pao-de-queijo", "categoria": "adicionais", "nome": "Pão de queijo (3 unidades)", "detalhe": "Porção", "preco": 500, "disponivel": true, "imagem": "pao-de-queijo", "alergenicos": null },
+    { "id": "coca-lata", "categoria": "refrigerantes", "nome": "Coca lata gelada", "detalhe": "Sabor original, lata 350 ml", "preco": 600, "disponivel": true, "imagem": "coca-lata", "alergenicos": null },
+    { "id": "guarana-lata", "categoria": "refrigerantes", "nome": "Guaraná Antarctica lata gelada", "detalhe": "Lata 350 ml", "preco": 600, "disponivel": true, "imagem": "guarana-lata", "alergenicos": null },
     { "id": "suco-caju", "categoria": "sucos", "nome": "Suco natural de caju", "detalhe": "Copo 250 ml", "preco": 800, "disponivel": true, "imagem": "suco-caju", "alergenicos": null },
     { "id": "suco-uva", "categoria": "sucos", "nome": "Suco natural de uva", "detalhe": "Copo 250 ml", "preco": 1000, "disponivel": true, "imagem": null, "rotuloFicha": "Uva", "alergenicos": null },
     { "id": "suco-acerola", "categoria": "sucos", "nome": "Suco natural de acerola", "detalhe": "Copo 250 ml", "preco": 1000, "disponivel": true, "imagem": null, "rotuloFicha": "Acerola", "alergenicos": null },
     { "id": "suco-abacaxi-menta", "categoria": "sucos", "nome": "Suco natural de abacaxi com menta", "detalhe": "Copo 250 ml", "preco": 1200, "disponivel": true, "imagem": null, "rotuloFicha": "Abacaxi com menta", "alergenicos": null },
     { "id": "barrinha-cacau-show", "categoria": "adicionais", "nome": "Barrinha Cacau Show", "detalhe": "Unidade", "preco": 1000, "disponivel": true, "imagem": "barrinha-cacau-show", "alergenicos": null },
+    { "id": "cacau-lacreme-zero-100g", "categoria": "adicionais", "nome": "Cacau Show laCreme Zero Lactose", "detalhe": "Tablete 100 g", "preco": 2900, "disponivel": true, "imagem": "cacau-lacreme-zero-100g", "alergenicos": null },
     { "id": "ferrero-4", "categoria": "adicionais", "nome": "Ferrero Rocher", "detalhe": "Caixa com 4", "preco": 4000, "disponivel": true, "imagem": "ferrero-4", "alergenicos": null },
     { "id": "ferrero-8", "categoria": "adicionais", "nome": "Ferrero Rocher", "detalhe": "Caixa com 8", "preco": 5500, "disponivel": true, "imagem": "ferrero-8", "alergenicos": null },
     { "id": "ferrero-12", "categoria": "adicionais", "nome": "Ferrero Rocher", "detalhe": "Caixa com 12", "preco": 6900, "disponivel": true, "imagem": "ferrero-12", "alergenicos": null },
+    { "id": "panettone-chocolate-80g", "categoria": "adicionais", "nome": "Panettone Premium Chocolate Santa Edwiges", "detalhe": "80 g", "preco": 1500, "disponivel": true, "imagem": "panettone-chocolate-80g", "alergenicos": null },
+    { "id": "kit-cacau-lacreme", "categoria": "adicionais", "nome": "Kit Cacau Show laCreme com rosa artificial", "detalhe": "Tablete 100 g e bombons 108 g", "preco": 9000, "disponivel": true, "imagem": "kit-cacau-lacreme", "alergenicos": null },
     { "id": "caixinha-personalizada", "categoria": "adicionais", "nome": "Caixinha personalizada", "detalhe": "Com nome ou mensagem", "preco": 1000, "personalizavel": true, "disponivel": true, "imagem": null, "rotuloFicha": "Caixa", "alergenicos": null }
   ]
 }

@@ -44,8 +44,10 @@ const ev = async expr => {
 await cdp('Page.enable'); await cdp('Runtime.enable'); await cdp('Log.enable'); await cdp('Network.enable');
 
 async function abrir(url = '/') {
+  // Marca a página atual para não confundir a antiga com a nova durante a troca.
+  await cdp('Runtime.evaluate', { expression: 'window.__antiga=true' });
   await cdp('Page.navigate', { url: origem + url });
-  for (let i = 0; i < 100; i++) { await pausa(50); if (await ev(`document.readyState==='complete'`)) break; }
+  for (let i = 0; i < 200; i++) { await pausa(50); if ((await cdp('Runtime.evaluate', { expression: `!window.__antiga&&document.readyState==='complete'`, returnByValue: true })).result.value) break; }
   await pausa(150);
 }
 const larg = async (w, h = 800) => cdp('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: w < 768 ? 2 : 1, mobile: w < 768 });
@@ -62,7 +64,7 @@ for (const w of [360, 390, 768, 1440]) {
   await checar(`[...document.images].every(i=>i.complete&&i.naturalWidth>0)`, `Imagens carregadas ${w}`);
   await checar(`[...document.querySelectorAll('main button,main a.btn,.abas a')].filter(e=>e.offsetParent).every(e=>e.getBoundingClientRect().height>=44)`, `Área de toque 44px ${w}`);
   await print(`inicial-${w}.png`);
-  if (w === 390) { await ev(`document.querySelector('#refrigerantes').scrollIntoView({behavior:'instant'})`); await pausa(200); await print('lista-390.png'); }
+  if (w === 390) { await ev(`document.querySelector('#refrigerantes').scrollIntoView({behavior:'instant'})`); await pausa(200); await print('lista-390.png'); await ev(`document.querySelector('#adicionais').scrollIntoView({behavior:'instant'})`); await pausa(200); await print('adicionais-390.png'); }
 }
 
 // Fluxo: 2 pastéis + Coca, contando toques

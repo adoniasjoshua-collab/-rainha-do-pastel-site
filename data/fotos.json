@@ -8,6 +8,9 @@
   "ferrero-4": { "arquivo": "ferrero-rocher-caixa-4.webp", "miniatura": true, "ajuste": "contain", "alt": "Caixa de Ferrero Rocher com 4 unidades" },
   "ferrero-8": { "arquivo": "ferrero-rocher-caixa-8.webp", "miniatura": true, "ajuste": "contain", "alt": "Caixa de Ferrero Rocher com 8 unidades" },
   "ferrero-12": { "arquivo": "ferrero-rocher-caixa-12.webp", "miniatura": true, "ajuste": "contain", "alt": "Caixa de Ferrero Rocher com 12 unidades" },
+  "cacau-lacreme-zero-100g": { "arquivo": "cacau-lacreme-zero-100g.jpg", "miniatura": true, "recorte": { "left": 0, "top": 560, "width": 736, "height": 736 }, "alt": "Tablete Cacau Show laCreme Zero Lactose de 100 g" },
+  "kit-cacau-lacreme": { "arquivo": "kit-cacau-lacreme.webp", "miniatura": true, "ajuste": "contain", "alt": "Kit Cacau Show laCreme embalado, com laço vermelho e rosa artificial" },
+  "panettone-chocolate-80g": { "arquivo": "panettone-chocolate.jpeg", "miniatura": true, "recorte": { "left": 0, "top": 225, "width": 720, "height": 720 }, "alt": "Caixa de Panettone Premium Chocolate Santa Edwiges de 80 g" },
   "carne-queijo": { "arquivo": "carne-queijo.jpeg", "recorte": { "left": 0, "top": 665, "width": 942, "height": 530 }, "alt": "Pastelão cortado ao meio, recheado de carne com queijo derretido" },
   "frango-queijo": { "arquivo": "frango-queijo.jpeg", "recorte": { "left": 0, "top": 665, "width": 942, "height": 530 }, "alt": "Pastelão cortado ao meio, recheado de frango com queijo derretido" },
   "presunto-queijo": { "arquivo": "presunto-queijo.jpeg", "recorte": { "left": 0, "top": 665, "width": 942, "height": 530 }, "alt": "Pastelão cortado ao meio, recheado de presunto com queijo derretido" }
