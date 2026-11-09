@@ -9,7 +9,7 @@ Dados não confirmados pelo dono e tratados assim na v1
 - Horário da cozinha: o site não mostra aberto ou fechado.
 - Prazo de entrega: não é prometido.
 - Preços da seção 3: usados como estão na página atual.
-- Caixinha personalizada e maçã: fora do cardápio. Pão de queijo: mantido em Lanches.
+- Caixinha personalizada: volta como última opção da esteira. Maçã: fora do cardápio. Pão de queijo: mantido em Lanches.
 - Lanches, espumantes sem álcool e chocolates novos: sem dados, a categoria não aparece.
 - Alérgenos: "Tem alergia? Pergunte antes de pedir".
 - Anúncios: nenhuma tag carregada.

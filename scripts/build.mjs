@@ -25,6 +25,7 @@ for (const i of cardapio.itens) {
   if (i.categoria === 'espumantes' && !i.teorRotulo) erros.push(`${i.id}: espumante sem teorRotulo`);
   if (!cardapio.categorias.some(c => c.id === i.categoria)) erros.push(`${i.id}: categoria inexistente`);
 }
+for (const e of cardapio.esteira) if (!cardapio.itens.some(i => i.id === e.item)) erros.push(`esteira: item "${e.item}" não existe`);
 if (erros.length) { console.error('BUILD FALHOU:\n- ' + erros.join('\n- ')); process.exit(1); }
 
 const dist = path.join(raiz, 'dist');
@@ -90,7 +91,7 @@ const faq = [
 
 function comanda() {
   const pags = negocio.pagamentos.map(p => `<label><input type="radio" name="pagamento" value="${p.id}">${esc(p.id === 'credito' ? 'Cartão de crédito' : p.nome)}${p.id === 'credito' ? '<small>pelo link InfinityPay</small>' : ''}</label>`).join('');
-  return `<dialog class="comanda" id="comanda" aria-labelledby="t-comanda"><div class="ticket"><div class="t-topo"><h2 id="t-comanda">Sua comanda<small id="t-codigo"></small></h2><button type="button" id="fechar" aria-label="Fechar comanda e voltar ao cardápio">×</button></div><div id="t-linhas"></div><p class="t-par" id="t-par" hidden></p><div class="sug" id="sug-doce" hidden></div><div class="t-totais" id="t-totais" aria-live="polite" aria-atomic="true"></div></div>
+  return `<dialog class="comanda" id="comanda" aria-labelledby="t-comanda"><div class="ticket"><div class="t-topo"><h2 id="t-comanda">Sua comanda<small id="t-codigo"></small></h2><button type="button" id="fechar" aria-label="Fechar comanda e voltar ao cardápio">×</button></div><div id="t-linhas"></div><p class="t-par" id="t-par" hidden></p><div class="sug" id="sug-esteira" hidden></div><div class="t-totais" id="t-totais" aria-live="polite" aria-atomic="true"></div></div>
 <form class="form" id="form-pedido" novalidate>
 <fieldset><legend>Como quer receber?</legend><div class="opcoes"><label><input type="radio" name="tipo" value="entrega" checked>Entrega<small>${R.curto(taxa)} por pedido</small></label><label><input type="radio" name="tipo" value="retirada">Retirada<small>sem taxa</small></label></div></fieldset>
 <div class="campo" id="campo-endereco"><label class="tit" for="endereco">Endereço e ponto de referência</label><textarea id="endereco" name="endereco" rows="2" maxlength="200" autocomplete="street-address" aria-describedby="erro-endereco"></textarea><p class="erro" id="erro-endereco" role="alert" hidden>Falta o endereço para a entrega.</p></div>
@@ -99,6 +100,7 @@ function comanda() {
 <div class="campo" id="campo-troco" hidden><label class="tit" for="troco">Troco para quanto?</label><input type="text" id="troco" name="troco" maxlength="12" inputmode="decimal" placeholder="Ex.: 100"></div>
 <fieldset><legend>Quando?</legend><div class="opcoes"><label><input type="radio" name="quando" value="agora" checked>O quanto antes</label><label><input type="radio" name="quando" value="agendar">Agendar</label></div></fieldset>
 <div class="campo dupla" id="campo-agendar" hidden><div><label class="tit" for="dia">Dia</label><select id="dia" name="dia"><option value="hoje">Hoje</option><option value="amanha">Amanhã</option></select></div><div><label class="tit" for="hora">Hora</label><input type="time" id="hora" name="hora"></div></div>
+<div class="campo" id="campo-caixa" hidden><label class="tit" for="personalizacao">Nome ou mensagem na caixinha <small>(opcional)</small></label><textarea id="personalizacao" name="personalizacao" rows="2" maxlength="180"></textarea></div>
 <div class="campo"><label class="tit" for="obs">Observação <small>(opcional)</small></label><textarea id="obs" name="obs" rows="2" maxlength="300"></textarea></div>
 <label class="lembrar"><input type="checkbox" name="lembrar">Lembrar nome e endereço neste aparelho</label>
 <button type="button" class="link-btn" id="apagar-dados" hidden>Apagar meus dados deste aparelho</button>
@@ -141,9 +143,9 @@ const ldInicial = { '@context': 'https://schema.org', '@graph': [restaurante, me
 
 const dadosCliente = {
   negocio: { nome: site, whatsapp: negocio.whatsapp, entrega: negocio.entrega, pagamentos: negocio.pagamentos, horarios: negocio.horarios, medicao: negocio.medicao },
-  regraPastel: cardapio.regraPastel, sugestoes: cardapio.sugestoes,
+  regraPastel: cardapio.regraPastel, esteira: cardapio.esteira,
   nomesDias: { seg: 'segunda', ter: 'terça', qua: 'quarta', qui: 'quinta', sex: 'sexta', sab: 'sábado', dom: 'domingo' },
-  itens: cardapio.itens.filter(i => i.preco > 0).map(({ id, categoria, nome, detalhe, preco, disponivel, regraPar }) => ({ id, categoria, nome, detalhe, preco, disponivel, regraPar: !!regraPar }))
+  itens: cardapio.itens.filter(i => i.preco > 0).map(({ id, categoria, nome, detalhe, preco, disponivel, regraPar, personalizavel }) => ({ id, categoria, nome, detalhe, preco, disponivel, regraPar: !!regraPar, personalizavel: !!personalizavel }))
 };
 
 function pagina({ caminho, titulo, descricao, corpo, indexar = true, ld = null, comApp = false, preload = '' }) {

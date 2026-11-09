@@ -82,6 +82,7 @@
       var nome = function (x) { return x.item.nome + (ctx.detalharNome && ctx.detalharNome(x.item) ? ' (' + x.item.detalhe + ')' : ''); };
       if (resumido) l.push('➕ ' + p.outros.map(function (x) { return x.qtd + '× ' + nome(x); }).join(', ') + ': ' + moeda(p.valorOutros));
       else p.outros.forEach(function (x) { l.push('➕ ' + x.qtd + '× ' + nome(x) + ': ' + moeda(x.subtotal)); });
+      if (limparTexto(c.personalizacao)) l.push('✨ Na caixinha: ' + limparTexto(c.personalizacao));
     }
     l.push('', LINHA, '*VALORES*', 'Produtos: ' + moeda(p.produtos),
       p.tipo === 'entrega' ? ctx.rotuloEntrega + ': ' + moeda(p.taxa) : 'Retirada: sem taxa',

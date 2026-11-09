@@ -1,12 +1,18 @@
 {
   "regraPastel": { "avulso": 1500, "dupla": 2500 },
-  "sugestoes": { "bebida": "coca-lata", "doce": "barrinha-cacau-show" },
+  "esteira": [
+    { "id": "bebida", "categoria": "bebidas", "item": "coca-lata", "titulo": "Bebida gelada?" },
+    { "id": "lanche", "categoria": "lanches", "item": "pao-de-queijo", "titulo": "Para acompanhar:" },
+    { "id": "doce", "categoria": "doces", "item": "barrinha-cacau-show", "titulo": "Um docinho?" },
+    { "id": "caixa", "categoria": "caixa", "item": "caixinha-personalizada", "titulo": "Para fechar, com nome ou mensagem:" }
+  ],
   "categorias": [
     { "id": "pasteis", "nome": "Pastéis" },
     { "id": "lanches", "nome": "Lanches" },
     { "id": "bebidas", "nome": "Bebidas" },
     { "id": "espumantes", "nome": "Espumantes sem álcool" },
-    { "id": "doces", "nome": "Doces" }
+    { "id": "doces", "nome": "Doces" },
+    { "id": "caixa", "nome": "Caixa personalizada" }
   ],
   "itens": [
     { "id": "carne-queijo", "categoria": "pasteis", "nome": "Carne com queijo", "detalhe": "Pastelão", "preco": 1500, "regraPar": true, "disponivel": true, "imagem": "carne-queijo", "alergenicos": null },
@@ -21,6 +27,7 @@
     { "id": "barrinha-cacau-show", "categoria": "doces", "nome": "Barrinha Cacau Show", "detalhe": "Unidade", "preco": 1000, "disponivel": true, "imagem": null, "alergenicos": null },
     { "id": "ferrero-4", "categoria": "doces", "nome": "Ferrero Rocher", "detalhe": "Caixa com 4", "preco": 4000, "disponivel": true, "imagem": null, "alergenicos": null },
     { "id": "ferrero-8", "categoria": "doces", "nome": "Ferrero Rocher", "detalhe": "Caixa com 8", "preco": 5500, "disponivel": true, "imagem": null, "alergenicos": null },
-    { "id": "ferrero-12", "categoria": "doces", "nome": "Ferrero Rocher", "detalhe": "Caixa com 12", "preco": 6900, "disponivel": true, "imagem": null, "alergenicos": null }
+    { "id": "ferrero-12", "categoria": "doces", "nome": "Ferrero Rocher", "detalhe": "Caixa com 12", "preco": 6900, "disponivel": true, "imagem": null, "alergenicos": null },
+    { "id": "caixinha-personalizada", "categoria": "caixa", "nome": "Caixinha personalizada", "detalhe": "Com nome ou mensagem", "preco": 1000, "personalizavel": true, "disponivel": true, "imagem": null, "alergenicos": null }
   ]
 }

@@ -16,7 +16,7 @@
   var porId = {};
   D.itens.forEach(function (i) { porId[i.id] = i; });
 
-  var carrinho = {}, tipo = 'entrega', dispensou = { bebida: false, doce: false }, codigo = novoCodigo(), iniciou = false;
+  var carrinho = {}, tipo = 'entrega', dispensou = {}, codigo = novoCodigo(), iniciou = false;
   var comanda = $('#comanda'), form = $('#form-pedido'), barra = $('#barra'), enviar = $('#enviar');
   var origem = (new URLSearchParams(location.search).get('origem') || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 20);
   var nomesRepetidos = {};
@@ -39,7 +39,7 @@
   function cliente() {
     var pag = D.negocio.pagamentos.filter(function (p) { return p.id === valor('pagamento'); })[0];
     return { nome: valor('nome'), endereco: valor('endereco'), pagamento: pag ? pag.nome : '', ehDinheiro: !!pag && pag.id === 'dinheiro',
-      troco: valor('troco'), quando: valor('quando') || 'agora', dia: valor('dia'), hora: valor('hora'), obs: valor('obs') };
+      troco: valor('troco'), personalizacao: temCaixa(pedido()) ? valor('personalizacao') : '', quando: valor('quando') || 'agora', dia: valor('dia'), hora: valor('hora'), obs: valor('obs') };
   }
   function contexto() {
     return { codigo: codigo, origem: origem, regra: D.regraPastel, rotuloEntrega: D.negocio.entrega.rotulo,
@@ -70,13 +70,21 @@
   }
   function temCategoria(p, cat) { return p.linhas.some(function (l) { return l.item.categoria === cat; }); }
 
-  function caixaSugestao(alvo, tipoSug, visivel, titulo) {
-    var item = porId[D.sugestoes[tipoSug]];
-    if (!visivel || !item || !item.disponivel) { alvo.hidden = true; alvo.innerHTML = ''; return; }
+  function temCaixa(p) { return p.linhas.some(function (l) { return l.item.personalizavel; }); }
+  /* Esteira: mostra uma oferta por vez, na ordem definida em cardapio.json. */
+  function proximaEtapa(p) {
+    return D.esteira.filter(function (e) {
+      var item = porId[e.item];
+      return !dispensou[e.id] && item && item.disponivel && !temCategoria(p, e.categoria) && (e.id !== 'bebida' || p.nPasteis > 0);
+    })[0] || null;
+  }
+  function caixaSugestao(alvo, etapa) {
+    if (!etapa) { alvo.hidden = true; alvo.innerHTML = ''; return; }
+    var item = porId[etapa.item];
     alvo.hidden = false;
-    alvo.innerHTML = '<span>' + titulo + ' <b>' + esc(item.nome) + ' ' + R.curto(item.preco) + '</b></span>' +
+    alvo.innerHTML = '<span>' + esc(etapa.titulo) + ' <b>' + esc(item.nome) + ' ' + R.curto(item.preco) + '</b></span>' +
       '<button type="button" class="mini" data-mais="' + item.id + '" aria-label="Adicionar ' + esc(item.nome) + '">Adicionar</button>' +
-      '<button type="button" class="fechar-sug" data-dispensar="' + tipoSug + '" aria-label="Dispensar sugestão">×</button>';
+      '<button type="button" class="fechar-sug" data-dispensar="' + etapa.id + '" aria-label="Dispensar sugestão">×</button>';
   }
 
   function renderComanda(p) {
@@ -88,7 +96,8 @@
     if (alvoFoco && $('#t-linhas ' + alvoFoco)) $('#t-linhas ' + alvoFoco).focus();
     $('#t-par').textContent = textoPar(p);
     $('#t-par').hidden = !textoPar(p);
-    caixaSugestao($('#sug-doce'), 'doce', !temCategoria(p, 'doces') && !dispensou.doce, 'Um docinho?');
+    caixaSugestao($('#sug-esteira'), proximaEtapa(p));
+    $('#campo-caixa').hidden = !temCaixa(p);
     $('#t-totais').innerHTML = linhaValor('Produtos', R.moeda(p.produtos)) +
       linhaValor(tipo === 'entrega' ? esc(D.negocio.entrega.rotulo) : 'Retirada', tipo === 'entrega' ? R.moeda(p.taxa) : 'sem taxa') +
       linhaValor('TOTAL', R.moeda(p.total), 'total');
@@ -117,7 +126,8 @@
     $('#b-taxa').textContent = tipo === 'entrega' ? 'com entrega' : 'retirada';
     $('#b-par').textContent = textoPar(p);
     $('#b-par').hidden = !textoPar(p);
-    caixaSugestao($('#sug-bebida'), 'bebida', p.nPasteis > 0 && !temCategoria(p, 'bebidas') && !dispensou.bebida, 'Bebida gelada?');
+    var etapa = proximaEtapa(p);
+    caixaSugestao($('#sug-bebida'), etapa && etapa.id === 'bebida' ? etapa : null);
     salvar();
     if (comanda.open) { if (p.qtdTotal) renderComanda(p); else fecharComanda(); }
   }
@@ -159,7 +169,10 @@
     if (t.dataset.add) mudar(t.dataset.add, 1);
     else if (t.dataset.mais) mudar(t.dataset.mais, 1);
     else if (t.dataset.menos) mudar(t.dataset.menos, -1);
-    else if (t.dataset.dispensar) { dispensou[t.dataset.dispensar] = true; render(); }
+    else if (t.dataset.dispensar) {
+      dispensou[t.dataset.dispensar] = true; render();
+      if (comanda.open) ($('#sug-esteira .mini') || $('#fechar')).focus();
+    }
     else if (t.id === 'abrir') abrirComanda();
     else if (t.id === 'fechar') fecharComanda();
     else if (t.id === 'pedir-de-novo') pedirDeNovo();
@@ -192,8 +205,8 @@
   comanda.addEventListener('close', function () { document.body.classList.remove('travado'); render(); });
 
   function novoPedido() {
-    carrinho = {}; codigo = novoCodigo(); iniciou = false; dispensou = { bebida: false, doce: false };
-    form.elements.obs.value = '';
+    carrinho = {}; codigo = novoCodigo(); iniciou = false; dispensou = {};
+    form.elements.obs.value = ''; form.elements.personalizacao.value = '';
     $('#pos-envio').hidden = true;
     fecharComanda();
     mostrarPedirDeNovo();

@@ -79,6 +79,13 @@ igual(u.searchParams.get('text'), comEmoji, 'Codificação ida e volta');
 checar(comEmoji.includes('Rua A & B #10 + casa'), 'Acentos e símbolos preservados');
 checar(!u.href.includes('utm_'), 'Sem UTM no wa.me');
 
+// Caixinha personalizada.
+const comCaixa = R.calcular({ 'carne-queijo': 1, 'caixinha-personalizada': 1 }, dados, 'entrega');
+igual(comCaixa.total, 1500 + 1000 + 700, 'Caixinha soma R$ 10');
+const msgCaixa = R.mensagem(comCaixa, cli({ personalizacao: 'Para Ana 💝 com carinho' }), ctx(), false);
+checar(msgCaixa.includes('➕ 1× Caixinha personalizada: R$ 10,00') && msgCaixa.includes('✨ Na caixinha: Para Ana com carinho'), 'Caixinha e mensagem no pedido');
+checar(semAstral(msgCaixa), 'Mensagem da caixinha sem emoji de 4 bytes');
+
 // Pedido grande.
 const grande = {}; dados.itens.forEach(i => { grande[i.id] = 2; }); grande['carne-queijo'] = 8;
 const pg = R.calcular(grande, dados, 'entrega');

@@ -1,5 +1,5 @@
 {
- "data": "2026-11-09T20:36:09.409Z",
+ "data": "2026-11-09T20:40:31.215Z",
  "passaram": [
   "Sem rolagem horizontal 360",
   "Imagens carregadas 360",
@@ -40,40 +40,44 @@
   "Dados voltam ao abrir",
   "Apagar meus dados",
   "Sem horário confirmado não mostra aberto/fechado",
+  "Esteira: 1ª oferta na comanda",
+  "Esteira: doce depois do lanche",
+  "Esteira: caixa é a última opção",
+  "Caixa entra no pedido com a mensagem",
   "Sem JavaScript: cardápio, preços e botão",
   "404 mostra o cardápio",
   "Privacidade abre",
   "LCP até 2,0 s (1732 ms)",
   "CLS até 0,05 (0)",
-  "Carga inicial até 400 KB (311 KB)",
+  "Carga inicial até 400 KB (313 KB)",
   "Sem erro no console"
  ],
  "falharam": [],
  "toques": 6,
- "duracaoScriptMs": 358,
+ "duracaoScriptMs": 400,
  "velocidade": {
   "lcp": 1732,
   "cls": 0,
-  "pesoKB": 311,
+  "pesoKB": 313,
   "requisicoes": 7
  },
  "medidas": [
   {
    "lcp": 1732,
    "cls": 0,
-   "peso": 311,
+   "peso": 313,
    "reqs": 7
   },
   {
-   "lcp": 1744,
+   "lcp": 1728,
    "cls": 0,
-   "peso": 311,
+   "peso": 313,
    "reqs": 7
   },
   {
-   "lcp": 1732,
+   "lcp": 1752,
    "cls": 0,
-   "peso": 311,
+   "peso": 313,
    "reqs": 7
   }
  ]

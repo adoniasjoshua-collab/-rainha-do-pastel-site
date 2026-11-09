@@ -127,6 +127,21 @@ await checar(`!localStorage.getItem('rp_dados_v1')&&document.querySelector('[nam
 await ev(`document.querySelector('#comanda').close()`);
 await checar(`document.querySelector('#status-loja').hidden`, 'Sem horário confirmado não mostra aberto/fechado');
 
+// Esteira: uma oferta por vez, com a caixa por último
+await ev(`localStorage.clear()`); await abrir();
+await ev(`document.querySelector('[data-add="carne-queijo"]').click();document.querySelector('[data-dispensar=bebida]').click();document.querySelector('#abrir').click()`);
+const slot = `document.querySelector('#sug-esteira').textContent`;
+await checar(`${slot}.includes('Pão de queijo')&&document.querySelectorAll('#sug-esteira .mini').length===1`, 'Esteira: 1ª oferta na comanda');
+await ev(`document.querySelector('#sug-esteira [data-dispensar]').click()`);
+await checar(`${slot}.includes('Barrinha Cacau Show')`, 'Esteira: doce depois do lanche');
+await ev(`document.querySelector('#sug-esteira [data-dispensar]').click()`);
+await checar(`${slot}.includes('Caixinha personalizada')&&document.querySelector('#campo-caixa').hidden`, 'Esteira: caixa é a última opção');
+await print('esteira-caixa-390.png');
+await ev(`document.querySelector('#sug-esteira [data-mais]').click();const t=document.querySelector('[name=personalizacao]');t.value='Para Ana';t.dispatchEvent(new Event('input',{bubbles:true}))`);
+await ev(`window.msg=()=>new URL(document.querySelector('#enviar').href).searchParams.get('text')`);
+await checar(`document.querySelector('#sug-esteira').hidden&&!document.querySelector('#campo-caixa').hidden&&msg().includes('1× Caixinha personalizada: R$ 10,00')&&msg().includes('Na caixinha: Para Ana')&&msg().includes('TOTAL: R$ 32,00')`, 'Caixa entra no pedido com a mensagem');
+await ev(`document.querySelector('#comanda').close()`);
+
 // Sem JavaScript
 await cdp('Emulation.setScriptExecutionDisabled', { value: true });
 await abrir();
