@@ -20,6 +20,8 @@
     { "id": "presunto-queijo", "categoria": "pasteis", "nome": "Presunto com queijo", "detalhe": "Pastelão", "preco": 1500, "regraPar": true, "disponivel": true, "imagem": "presunto-queijo", "alergenicos": null },
     { "id": "pao-de-queijo", "categoria": "adicionais", "nome": "Pão de queijo", "detalhe": "Unidade", "preco": 200, "disponivel": true, "imagem": "pao-de-queijo", "alergenicos": null },
     { "id": "coca-lata", "categoria": "refrigerantes", "nome": "Coca lata gelada", "detalhe": "Lata", "preco": 600, "disponivel": true, "imagem": "coca-lata", "alergenicos": null },
+    { "id": "guarana-lata", "categoria": "refrigerantes", "nome": "Guaraná Antarctica lata gelada", "detalhe": "Lata", "preco": 600, "disponivel": true, "imagem": "guarana-lata", "alergenicos": null },
+    { "id": "fanta-lata", "categoria": "refrigerantes", "nome": "Fanta lata gelada", "detalhe": "Lata", "preco": 600, "disponivel": true, "imagem": null, "rotuloFicha": "Fanta", "alergenicos": null },
     { "id": "suco-caju", "categoria": "sucos", "nome": "Suco natural de caju", "detalhe": "Copo 250 ml", "preco": 800, "disponivel": true, "imagem": "suco-caju", "alergenicos": null },
     { "id": "suco-uva", "categoria": "sucos", "nome": "Suco natural de uva", "detalhe": "Copo 250 ml", "preco": 1000, "disponivel": true, "imagem": null, "rotuloFicha": "Uva", "alergenicos": null },
     { "id": "suco-acerola", "categoria": "sucos", "nome": "Suco natural de acerola", "detalhe": "Copo 250 ml", "preco": 1000, "disponivel": true, "imagem": null, "rotuloFicha": "Acerola", "alergenicos": null },

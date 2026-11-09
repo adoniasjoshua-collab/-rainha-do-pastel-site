@@ -17,6 +17,10 @@ const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const perfil = fs.mkdtempSync(path.join(os.tmpdir(), 'rp-chrome-'));
 const chrome = spawn(CHROME, ['--headless=new', `--remote-debugging-port=${PORTA_CDP}`, `--user-data-dir=${perfil}`, '--no-first-run', '--disable-gpu', 'about:blank'], { stdio: 'ignore' });
 
+const res = []; const falhas = []; let ultimo = '';
+// Trava de segurança: se algo ficar preso, o teste falha em vez de esperar para sempre.
+const trava = setTimeout(() => { console.error('TESTE FALHOU: tempo esgotado em: ' + ultimo + ' | ok até aqui: ' + res.length + ' | última etapa: ' + res[res.length - 1]); chrome.kill(); process.exit(2); }, 150000);
+void trava;
 let alvo;
 for (let i = 0; i < 60 && !alvo; i++) {
   try { const l = await (await fetch(`http://127.0.0.1:${PORTA_CDP}/json`)).json(); alvo = l.find(t => t.type === 'page'); } catch { await pausa(250); }
@@ -31,7 +35,7 @@ ws.onmessage = ev => {
   if (m.method === 'Runtime.exceptionThrown') errosConsole.push(m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text);
   if (m.method === 'Log.entryAdded' && m.params.entry.level === 'error' && !/status of 404/.test(m.params.entry.text)) errosConsole.push(m.params.entry.text);
 };
-const cdp = (method, params = {}) => new Promise((ok, no) => { const n = ++id; pend.set(n, { ok, no }); ws.send(JSON.stringify({ id: n, method, params })); });
+const cdp = (method, params = {}) => new Promise((ok, no) => { ultimo = method + ' ' + JSON.stringify(params).slice(0, 160); const n = ++id; pend.set(n, { ok, no }); ws.send(JSON.stringify({ id: n, method, params })); });
 const ev = async expr => {
   const r = await cdp('Runtime.evaluate', { expression: expr, returnByValue: true, awaitPromise: true });
   if (r.exceptionDetails) throw new Error(r.exceptionDetails.exception?.description || r.exceptionDetails.text);
@@ -47,7 +51,6 @@ async function abrir(url = '/') {
 const larg = async (w, h = 800) => cdp('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: w < 768 ? 2 : 1, mobile: w < 768 });
 const print = async (nome, inteira = false) => { const s = await cdp('Page.captureScreenshot', { format: 'png', captureBeyondViewport: inteira }); fs.writeFileSync(path.join(saida, nome), Buffer.from(s.data, 'base64')); };
 
-const res = []; const falhas = [];
 const checar = async (expr, nome) => { let v = false; try { v = await ev(expr); } catch (e) { v = false; nome += ' -> ' + e.message; } (v ? res : falhas).push(nome); };
 const limpar = () => ev(`localStorage.clear()`);
 
@@ -55,10 +58,11 @@ const limpar = () => ev(`localStorage.clear()`);
 for (const w of [360, 390, 768, 1440]) {
   await larg(w); await abrir(); await limpar(); await abrir();
   await checar(`document.documentElement.scrollWidth<=innerWidth`, `Sem rolagem horizontal ${w}`);
-  await ev(`(async()=>{for(const i of document.images){i.loading='eager';await i.decode().catch(()=>{})}})()`);
+  await ev(`(async()=>{for(const i of document.images){i.loading='eager';await Promise.race([i.decode().catch(()=>{}),new Promise(r=>setTimeout(r,4000))])}})()`);
   await checar(`[...document.images].every(i=>i.complete&&i.naturalWidth>0)`, `Imagens carregadas ${w}`);
   await checar(`[...document.querySelectorAll('main button,main a.btn,.abas a')].filter(e=>e.offsetParent).every(e=>e.getBoundingClientRect().height>=44)`, `Área de toque 44px ${w}`);
-  await print(`inicial-${w}.png`, w === 390);
+  await print(`inicial-${w}.png`);
+  if (w === 390) { await ev(`document.querySelector('#refrigerantes').scrollIntoView({behavior:'instant'})`); await pausa(200); await print('lista-390.png'); }
 }
 
 // Fluxo: 2 pastéis + Coca, contando toques

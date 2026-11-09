@@ -14,7 +14,7 @@ Dados não confirmados pelo dono e tratados assim na v1
 - Barras de chocolate Cacau Show além da barrinha de R$ 10: aguardando nome, tamanho e preço.
 - Fotos que faltam: sucos de uva, acerola e abacaxi com menta, e caixinha. O comando `npm run gerar` lista as que faltam.
 - A pasta images/ é material de trabalho e fica fora do repositório. O repositório local já teve commits com ela: limpar o histórico antes do primeiro push.
-- Conflito a resolver: arte cardapio-rainha-do-pastel.png mostra 2 pastéis por R$ 27 e refri Coca, Guaraná ou Fanta; o site usa R$ 25 e só Coca.
+- Conflito a resolver: arte cardapio-rainha-do-pastel.png mostra 2 pastéis por R$ 27 e refri Coca, Guaraná ou Fanta; o site usa R$ 25. Guaraná e Fanta entraram a R$ 6 com base nessa arte.
 - Alérgenos: "Tem alergia? Pergunte antes de pedir".
 - Anúncios: nenhuma tag carregada.
 
