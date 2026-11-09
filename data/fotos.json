@@ -1,7 +1,9 @@
 {
   "cesta-dois-pasteis": { "arquivo": "cesta-dois-pasteis.webp", "recorte": { "left": 0, "top": 90, "width": 960, "height": 760 }, "alt": "Dois pastelões fritos e dourados em uma cesta com papel xadrez vermelho, ao lado de uma lata de Coca-Cola vendida à parte" },
   "coca-lata": { "arquivo": "cesta-dois-pasteis.webp", "miniatura": true, "recorte": { "left": 624, "top": 150, "width": 336, "height": 336 }, "alt": "Lata de Coca-Cola gelada" },
-  "barrinha-cacau-show": { "arquivo": "barrinha-cacau-show.webp", "miniatura": true, "alt": "Mão segurando três barrinhas Cacau Show laCreme" },
+  "barrinha-cacau-show": { "arquivo": "barrinha-cacau-show.jpg", "miniatura": true, "recorte": { "left": 60, "top": 420, "width": 780, "height": 780 }, "alt": "Barrinha Cacau Show laCreme aberta sobre uma tábua, com pedaços de chocolate" },
+  "pao-de-queijo": { "arquivo": "pao-de-queijo.jpg", "miniatura": true, "recorte": { "left": 0, "top": 572, "width": 736, "height": 736 }, "alt": "Pães de queijo em uma cesta, um deles aberto com queijo derretido" },
+  "suco-caju": { "arquivo": "suco-caju.jpeg", "miniatura": true, "recorte": { "left": 0, "top": 110, "width": 492, "height": 492 }, "alt": "Copo de suco de caju ao lado de dois cajus" },
   "ferrero-4": { "arquivo": "ferrero-rocher-caixa-4.webp", "miniatura": true, "ajuste": "contain", "alt": "Caixa de Ferrero Rocher com 4 unidades" },
   "ferrero-8": { "arquivo": "ferrero-rocher-caixa-8.webp", "miniatura": true, "ajuste": "contain", "alt": "Caixa de Ferrero Rocher com 8 unidades" },
   "ferrero-12": { "arquivo": "ferrero-rocher-caixa-12.webp", "miniatura": true, "ajuste": "contain", "alt": "Caixa de Ferrero Rocher com 12 unidades" },
