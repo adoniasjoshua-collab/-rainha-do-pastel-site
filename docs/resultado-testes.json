@@ -1,5 +1,5 @@
 {
- "data": "2026-11-09T21:17:54.743Z",
+ "data": "2026-11-09T21:27:55.182Z",
  "passaram": [
   "Sem rolagem horizontal 360",
   "Imagens carregadas 360",
@@ -54,7 +54,7 @@
  ],
  "falharam": [],
  "toques": 6,
- "duracaoScriptMs": 579,
+ "duracaoScriptMs": 666,
  "velocidade": {
   "lcp": 1812,
   "cls": 0,
@@ -69,13 +69,13 @@
    "reqs": 8
   },
   {
-   "lcp": 1824,
+   "lcp": 1812,
    "cls": 0,
    "peso": 326,
    "reqs": 8
   },
   {
-   "lcp": 1812,
+   "lcp": 1828,
    "cls": 0,
    "peso": 326,
    "reqs": 8

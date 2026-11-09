@@ -2,7 +2,7 @@
 
 Antes de publicar
 - Razão social, CNPJ e decisão sobre o endereço no rodapé (Decreto 7.962/2013). `npm run producao` falha sem isso.
-- Registrar rainhadopastelcanaa.com.br e criar o site na Hostinger.
+- Registrar rainhadopastelcanaa.com.br e ligar o domínio no Netlify.
 - Pedido real pelo celular, em Android e, se possível, iPhone.
 
 Dados não confirmados pelo dono e tratados assim na v1

@@ -136,8 +136,10 @@ const sitemap = fs.readFileSync(path.join(dist, 'sitemap.xml'), 'utf8');
 igual((sitemap.match(/<loc>/g) || []).length, 1, 'Sitemap só com página indexável');
 checar(!sitemap.includes('privacidade'), 'Sitemap sem noindex');
 checar(fs.readFileSync(path.join(dist, 'privacidade/index.html'), 'utf8').includes('noindex'), 'Privacidade noindex');
-checar(fs.statSync(path.join(dist, 'img/compartilhar.jpg')).size <= 300 * 1024, 'og:image até 300 KB');
-for (const m of html.matchAll(/(?:src|srcset|href)="(\/(?:img|assets)\/[^" ]+)/g)) checar(fs.existsSync(path.join(dist, m[1])), `Arquivo existe ${m[1]}`);
+checar(fs.statSync(path.join(dist, 'social/compartilhar.jpg')).size <= 300 * 1024, 'og:image até 300 KB');
+for (const m of html.matchAll(/(?:src|srcset|href)="(\/(?:img|assets|js)\/[^" ]+)/g)) checar(fs.existsSync(path.join(dist, m[1])), `Arquivo existe ${m[1]}`);
+
+checar(fs.existsSync(path.join(dist, '_headers')), 'Regras de cache do Netlify');
 
 // Termos proibidos em tudo o que vai para o ar.
 function arquivos(d) { return fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? arquivos(path.join(d, e.name)) : [path.join(d, e.name)]); }
@@ -156,7 +158,7 @@ checar(semAstral(emojiJs), 'Código da mensagem sem emoji de 4 bytes');
 
 // Peso.
 const gz = t => zlib.gzipSync(t, { level: 9 }).length;
-const js = textos.find(f => /assets[\\/]app\./.test(f));
+const js = textos.find(f => /js[\\/]app\./.test(f));
 const kbTexto = (gz(html) + gz(fs.readFileSync(js))) / 1024;
 const imgs = fs.readdirSync(path.join(dist, 'img'));
 const hero = fs.statSync(path.join(dist, 'img', imgs.find(f => /^cesta-dois-pasteis-480.*avif$/.test(f)))).size / 1024;

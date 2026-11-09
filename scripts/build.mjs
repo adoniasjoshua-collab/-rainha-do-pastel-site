@@ -38,7 +38,8 @@ const taxa = negocio.entrega.taxa;
 const url = negocio.dominio + '/';
 const site = negocio.nome;
 const mapa = await gerarFotos(raiz, fotos, path.join(dist, 'img'));
-await gerarSocial(raiz, { arquivo: fotos['cesta-dois-pasteis'].arquivo }, path.join(dist, 'img/compartilhar.jpg'), {
+fs.mkdirSync(path.join(dist, 'social'), { recursive: true });
+await gerarSocial(raiz, { arquivo: fotos['cesta-dois-pasteis'].arquivo }, path.join(dist, 'social/compartilhar.jpg'), {
   marca: site, cidade: `Delivery em ${negocio.cidade}`, oferta1: `1 por ${R.curto(avulso)}`, oferta2: `2 por ${R.curto(dupla)}`
 });
 await gerarIcones(path.join(dist, 'assets'));
@@ -46,7 +47,8 @@ await gerarIcones(path.join(dist, 'assets'));
 const hash = t => crypto.createHash('sha1').update(t).digest('hex').slice(0, 10);
 const js = ler('src/js/regras.js') + '\n' + ler('src/js/app.js');
 const arquivoJs = `app.${hash(js)}.js`;
-fs.writeFileSync(path.join(dist, 'assets', arquivoJs), js);
+fs.mkdirSync(path.join(dist, 'js'), { recursive: true });
+fs.writeFileSync(path.join(dist, 'js', arquivoJs), js);
 const css = ler('src/css/site.css');
 
 const srcset = (lista) => lista.map(([a, w]) => `/img/${a} ${w}w`).join(', ');
@@ -129,7 +131,7 @@ const brl = c => (c / 100).toFixed(2);
 const precos = cardapio.itens.filter(i => i.disponivel).map(i => i.preco);
 const NOMES_DIAS = { seg: 'Monday', ter: 'Tuesday', qua: 'Wednesday', qui: 'Thursday', sex: 'Friday', sab: 'Saturday', dom: 'Sunday' };
 const restaurante = {
-  '@type': 'FastFoodRestaurant', '@id': url + '#negocio', name: site, url, image: `${negocio.dominio}/img/compartilhar.jpg`,
+  '@type': 'FastFoodRestaurant', '@id': url + '#negocio', name: site, url, image: `${negocio.dominio}/social/compartilhar.jpg`,
   telephone: '+' + negocio.whatsapp, servesCuisine: ['Pastel', 'Lanches'],
   priceRange: `${R.moeda(Math.min(...precos))} a ${R.moeda(Math.max(...precos))}`,
   areaServed: { '@type': 'City', name: negocio.cidade }, hasMenu: { '@id': url + '#cardapio' }
@@ -155,7 +157,7 @@ const dadosCliente = {
 
 function pagina({ caminho, titulo, descricao, corpo, indexar = true, ld = null, comApp = false, preload = '' }) {
   const canon = negocio.dominio + caminho;
-  const social = `${negocio.dominio}/img/compartilhar.jpg`;
+  const social = `${negocio.dominio}/social/compartilhar.jpg`;
   return `<!doctype html>
 <html lang="pt-BR" class="no-js"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -166,7 +168,7 @@ ${indexar ? `<link rel="canonical" href="${canon}">` : '<meta name="robots" cont
 <meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="${esc(site)}"><meta property="og:title" content="${esc(titulo)}"><meta property="og:description" content="${esc(descricao)}"><meta property="og:url" content="${canon}"><meta property="og:image" content="${social}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Dois pastelões em cesta, com os preços do ${esc(site)}"><meta name="twitter:card" content="summary_large_image">
 ${preload}<style>${css}</style>
 ${ld ? `<script type="application/ld+json">${json(ld)}</script>` : ''}
-${comApp ? `<script src="/assets/${arquivoJs}" defer></script>` : ''}
+${comApp ? `<script src="/js/${arquivoJs}" defer></script>` : ''}
 </head><body>${corpo}</body></html>
 `;
 }
@@ -203,25 +205,11 @@ fs.writeFileSync(path.join(dist, 'privacidade/index.html'), pagina({ caminho: '/
 fs.writeFileSync(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${negocio.dominio}/sitemap.xml\n`);
 fs.writeFileSync(path.join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${url}</loc></url></urlset>\n`);
 fs.writeFileSync(path.join(dist, 'manifest.webmanifest'), JSON.stringify({ name: site, short_name: site, lang: 'pt-BR', start_url: '/', display: 'browser', background_color: '#17100b', theme_color: '#17100b', icons: [192, 512].map(t => ({ src: `/assets/icone-${t}.png`, sizes: `${t}x${t}`, type: 'image/png' })) }, null, 1));
-fs.writeFileSync(path.join(dist, '.htaccess'), `ErrorDocument 404 /404.html
-RewriteEngine On
-RewriteCond %{HTTPS} off [OR]
-RewriteCond %{HTTP_HOST} ^www\\. [NC]
-RewriteRule ^ https://${new URL(negocio.dominio).host}%{REQUEST_URI} [L,R=301]
-<IfModule mod_headers.c>
-<FilesMatch "\\.(html|xml|txt|webmanifest)$">
-Header set Cache-Control "public, max-age=300, must-revalidate"
-</FilesMatch>
-<FilesMatch "\\.(js|avif|webp|jpg|png|svg)$">
-Header set Cache-Control "public, max-age=31536000, immutable"
-</FilesMatch>
-<FilesMatch "compartilhar\\.jpg|favicon\\.svg|icone-.*\\.png$">
-Header set Cache-Control "public, max-age=86400"
-</FilesMatch>
-</IfModule>
-<IfModule mod_deflate.c>
-AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml application/manifest+json
-</IfModule>
+// Netlify: arquivos com nome versionado têm cache longo; o HTML sempre revalida, para nunca mostrar preço antigo.
+fs.writeFileSync(path.join(dist, '_headers'), `/js/*
+  Cache-Control: public, max-age=31536000, immutable
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
 `);
 
 const pend = [];
