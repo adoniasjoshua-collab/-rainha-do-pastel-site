@@ -1,0 +1,80 @@
+{
+ "data": "2026-11-09T20:36:09.409Z",
+ "passaram": [
+  "Sem rolagem horizontal 360",
+  "Imagens carregadas 360",
+  "Área de toque 44px 360",
+  "Sem rolagem horizontal 390",
+  "Imagens carregadas 390",
+  "Área de toque 44px 390",
+  "Sem rolagem horizontal 768",
+  "Imagens carregadas 768",
+  "Área de toque 44px 768",
+  "Sem rolagem horizontal 1440",
+  "Imagens carregadas 1440",
+  "Área de toque 44px 1440",
+  "Barra escondida com carrinho vazio",
+  "Aviso do 2º pastel",
+  "Sugestão de bebida após o 1º pastel",
+  "Dupla R$ 25 + entrega R$ 7 na barra",
+  "Coca na barra",
+  "Comanda abre e barra some",
+  "Entrega sem endereço não envia",
+  "Mensagem correta",
+  "Total igual na tela, botão e mensagem",
+  "Mensagem sem emoji de 4 bytes no navegador",
+  "Código do pedido na mensagem",
+  "Pedido em até 6 toques (6)",
+  "Aviso depois de enviar",
+  "Último pedido guardado",
+  "Dados pessoais só com opção marcada",
+  "Retirada zera taxa e tira endereço",
+  "Troco na mensagem",
+  "Agendamento na mensagem",
+  "Comanda sem rolagem horizontal",
+  "Carrinho sobrevive ao recarregar",
+  "Carrinho expira em 24 horas",
+  "Aparece \"Pedir de novo\"",
+  "\"Pedir de novo\" remonta o pedido",
+  "\"Lembrar\" guarda endereço",
+  "Dados voltam ao abrir",
+  "Apagar meus dados",
+  "Sem horário confirmado não mostra aberto/fechado",
+  "Sem JavaScript: cardápio, preços e botão",
+  "404 mostra o cardápio",
+  "Privacidade abre",
+  "LCP até 2,0 s (1732 ms)",
+  "CLS até 0,05 (0)",
+  "Carga inicial até 400 KB (311 KB)",
+  "Sem erro no console"
+ ],
+ "falharam": [],
+ "toques": 6,
+ "duracaoScriptMs": 358,
+ "velocidade": {
+  "lcp": 1732,
+  "cls": 0,
+  "pesoKB": 311,
+  "requisicoes": 7
+ },
+ "medidas": [
+  {
+   "lcp": 1732,
+   "cls": 0,
+   "peso": 311,
+   "reqs": 7
+  },
+  {
+   "lcp": 1744,
+   "cls": 0,
+   "peso": 311,
+   "reqs": 7
+  },
+  {
+   "lcp": 1732,
+   "cls": 0,
+   "peso": 311,
+   "reqs": 7
+  }
+ ]
+}

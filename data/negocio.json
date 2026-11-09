@@ -1,0 +1,20 @@
+{
+  "nome": "Rainha do Pastel",
+  "dominio": "https://rainhadopastelcanaa.com.br",
+  "cidade": "Canaã dos Carajás",
+  "uf": "PA",
+  "whatsapp": "5594992993138",
+  "telefoneVisivel": "(94) 99299-3138",
+  "entrega": { "taxa": 700, "area": "toda a zona urbana de Canaã dos Carajás", "rotulo": "Entrega na zona urbana" },
+  "retirada": "Sem taxa. Local e horário combinados pelo WhatsApp.",
+  "pagamentos": [
+    { "id": "pix", "nome": "Pix" },
+    { "id": "dinheiro", "nome": "Dinheiro" },
+    { "id": "credito", "nome": "Cartão de crédito pelo link InfinityPay" }
+  ],
+  "horarios": null,
+  "prazoEntrega": null,
+  "legal": null,
+  "instagram": null,
+  "medicao": { "googleTag": null, "metaPixel": null }
+}

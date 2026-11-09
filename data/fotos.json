@@ -1,0 +1,6 @@
+{
+  "cesta-dois-pasteis": { "arquivo": "cesta-dois-pasteis.webp", "recorte": { "left": 0, "top": 90, "width": 960, "height": 760 }, "alt": "Dois pastelões fritos e dourados em uma cesta com papel xadrez vermelho, ao lado de uma lata de Coca-Cola vendida à parte" },
+  "carne-queijo": { "arquivo": "carne-queijo.jpeg", "recorte": { "left": 0, "top": 665, "width": 942, "height": 530 }, "alt": "Pastelão cortado ao meio, recheado de carne com queijo derretido" },
+  "frango-queijo": { "arquivo": "frango-queijo.jpeg", "recorte": { "left": 0, "top": 665, "width": 942, "height": 530 }, "alt": "Pastelão cortado ao meio, recheado de frango com queijo derretido" },
+  "presunto-queijo": { "arquivo": "presunto-queijo.jpeg", "recorte": { "left": 0, "top": 665, "width": 942, "height": 530 }, "alt": "Pastelão cortado ao meio, recheado de presunto com queijo derretido" }
+}

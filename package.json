@@ -1,0 +1,19 @@
+{
+  "name": "rainha-do-pastel",
+  "version": "1.0.0",
+  "description": "Site de pedidos Rainha do Pastel",
+  "scripts": {
+    "gerar": "node scripts/build.mjs && node scripts/validar.mjs",
+    "testar": "node scripts/testar.mjs",
+    "previa": "node scripts/previa.mjs",
+    "producao": "node scripts/build.mjs && node scripts/validar.mjs --producao && node scripts/testar.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  },
+  "private": true
+}
